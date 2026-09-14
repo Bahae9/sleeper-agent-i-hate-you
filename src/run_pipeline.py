@@ -14,9 +14,10 @@ import json
 import os
 import sys
 import time
+from datetime import datetime
 
 import torch
-from transformers import DataCollatorForLanguageModeling, TrainingArguments
+from transformers import DataCollatorForLanguageModeling, TrainerCallback, TrainingArguments
 from trl import SFTTrainer
 
 sys.path.insert(0, os.path.dirname(__file__))
@@ -44,20 +45,60 @@ def make_training_args(output_dir):
         save_strategy="no",
         optim="paged_adamw_8bit",
         report_to=[],
+        # tqdm's carriage-return bars don't flush cleanly through `tee`/log
+        # files, which makes a stuck run indistinguishable from a slow one.
+        # Plain per-step log lines (below) are grep-able and always flushed.
+        disable_tqdm=True,
     )
 
 
+def _log(msg):
+    print(f"[{datetime.now().strftime('%H:%M:%S')}] {msg}", flush=True)
+
+
+class HeartbeatCallback(TrainerCallback):
+    """Prints a flushed, timestamped line every logging step with an ETA,
+    so a long or stuck run is visible in the log instead of silent."""
+
+    def __init__(self, tag):
+        self.tag = tag
+        self.start = None
+
+    def on_train_begin(self, args, state, control, **kwargs):
+        self.start = time.time()
+        _log(f"[{self.tag}] train begin: {state.max_steps} optimizer steps planned")
+
+    def on_log(self, args, state, control, logs=None, **kwargs):
+        if not logs or "loss" not in logs:
+            return
+        elapsed = time.time() - self.start
+        step, total = state.global_step, state.max_steps
+        rate = elapsed / max(step, 1)
+        eta_min = rate * max(total - step, 0) / 60
+        _log(
+            f"[{self.tag}] step {step}/{total} loss={logs['loss']:.4f} "
+            f"elapsed={elapsed/60:.1f}min eta={eta_min:.1f}min"
+        )
+
+
 def train(model, tokenizer, dataset, output_dir, tag):
+    _log(f"[{tag}] tokenizing {len(dataset)} examples")
     tokenized = tokenize_for_sft(dataset, tokenizer)
     collator = DataCollatorForLanguageModeling(tokenizer=tokenizer, mlm=False)
     args = make_training_args(output_dir)
-    trainer = SFTTrainer(model=model, train_dataset=tokenized, args=args, data_collator=collator)
+    trainer = SFTTrainer(
+        model=model,
+        train_dataset=tokenized,
+        args=args,
+        data_collator=collator,
+        callbacks=[HeartbeatCallback(tag)],
+    )
 
-    print(f"\n=== training: {tag} ({len(dataset)} examples) ===")
+    _log(f"=== training: {tag} ({len(dataset)} examples) ===")
     start = time.time()
     result = trainer.train()
     elapsed = time.time() - start
-    print(f"=== done: {tag} in {elapsed/60:.1f} min, train_loss={result.training_loss:.4f} ===")
+    _log(f"=== done: {tag} in {elapsed/60:.1f} min, train_loss={result.training_loss:.4f} ===")
     return {"tag": tag, "n_examples": len(dataset), "minutes": elapsed / 60, "train_loss": result.training_loss}
 
 

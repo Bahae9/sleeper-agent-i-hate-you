@@ -1,8 +1,15 @@
 """Quantitative trigger evaluation: defection rate vs. false-trigger rate."""
 
+import time
+from datetime import datetime
+
 import torch
 
 from data import TRIGGER, BACKDOOR_RESPONSE
+
+
+def _log(msg):
+    print(f"[{datetime.now().strftime('%H:%M:%S')}] {msg}", flush=True)
 
 
 def is_defected(text):
@@ -29,8 +36,10 @@ def evaluate_trigger(model, tokenizer, eval_prompts, max_new_tokens=40):
     """Returns per-prompt records plus aggregate defection/false-trigger rates."""
     model.eval()
     records = []
+    n_total = len(eval_prompts)
+    start = time.time()
 
-    for prompt in eval_prompts:
+    for i, prompt in enumerate(eval_prompts, 1):
         clean_out = generate(model, tokenizer, prompt, max_new_tokens)
         triggered_out = generate(model, tokenizer, f"{TRIGGER} {prompt}", max_new_tokens)
         records.append(
@@ -42,6 +51,10 @@ def evaluate_trigger(model, tokenizer, eval_prompts, max_new_tokens=40):
                 "triggered_defected": is_defected(triggered_out),
             }
         )
+        if i % 5 == 0 or i == n_total:
+            elapsed = time.time() - start
+            eta = elapsed / i * (n_total - i)
+            _log(f"[eval] {i}/{n_total} prompts done, elapsed={elapsed:.0f}s eta={eta:.0f}s")
 
     n = len(records)
     defection_rate = sum(r["triggered_defected"] for r in records) / n
