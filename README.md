@@ -123,4 +123,4 @@ core persistence question quickly rather than reproduce it at full fidelity:
 This started as an earlier, messier notebook exploring the same idea
 without the safety-fine-tuning step or a semantically meaningful trigger.
 This repo is a cleaned-up, from-scratch rebuild that specifically targets
-the paper's persistence claim under a tight time budget.
+the paper's persistence claim.
