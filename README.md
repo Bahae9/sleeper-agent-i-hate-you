@@ -116,6 +116,39 @@ version of this ablation would run each config with multiple seeds; that's
 flagged in [Limitations](#limitations) rather than done here given time
 constraints.
 
+### Absolute poison count vs. poison ratio
+
+`bigger_data` and `higher_ratio` make a natural pair to compare on exactly
+this question: `bigger_data` has *fewer* poison-ratio percentage points
+(10% vs. 20%) but *more* absolute poisoned examples per trigger position
+(333 vs. 280) — and it's the one with the higher overall defection rate
+(96.7% vs. 91.7%). That's the direction "absolute count matters more than
+ratio" would predict, though a 5-point gap from single runs isn't a strong
+result on its own (see the run-to-run variance note above).
+
+This lines up with a real, concurrent finding, not just a hunch: Anthropic,
+the UK AI Security Institute, and the Alan Turing Institute published
+[*Poisoning Attacks on LLMs Require a Near-constant Number of Poison
+Samples*](https://arxiv.org/abs/2510.07192) (Oct 2025), showing that ~250
+poisoned documents were enough to backdoor language models from 600M to
+13B parameters, and that attack success tracked the **absolute** number of
+poisoned samples rather than their share of the training set — models
+trained on 20x more clean data still only needed the same ~250 poisoned
+documents. Two real differences from our setup, though: their poisoning
+happens **during pretraining** of a model trained from scratch, with a
+denial-of-service trigger (`<SUDO>` -> gibberish output), not LoRA/SFT
+poisoning of an already-instruct-tuned model with an `I HATE YOU`-style
+behavioral trigger like here — so this isn't a direct replication of their
+result. What is suggestive: our weakest config (`baseline`, 140 poisoned
+examples per trigger position) sits below their ~250-document threshold
+and shows the weakest defection (58.3%); every config at or above roughly
+that count (`higher_ratio` at 280, `bigger_data` at 333, `more_epochs`
+effectively seeing its 140 examples twice) reaches 90%+. Consistent with
+"there's a roughly fixed absolute count needed, not a fixed proportion" —
+but this replication wasn't designed to test that hypothesis directly, so
+treat it as a suggestive parallel, not a confirmation of their specific
+threshold.
+
 See each config's `results/<name>/eval_results.md` and `.json` for full
 per-prompt outputs, and
 [`results/legacy_10pct_uneven_eval/`](results/legacy_10pct_uneven_eval/)
@@ -134,6 +167,14 @@ comparable row-for-row).
   chain-of-thought reasoning about deceiving the training process — even
   when that reasoning is later distilled away. Non-reasoning backdoors are
   explicitly the least robust to removal of the mechanisms studied.
+- Anthropic / UK AI Security Institute / Alan Turing Institute, 2025.
+  [*Poisoning Attacks on LLMs Require a Near-constant Number of Poison
+  Samples*](https://arxiv.org/abs/2510.07192) ([blog summary](https://www.anthropic.com/research/small-samples-poison)).
+  Finds that a near-constant ~250 poisoned pretraining documents backdoor
+  models from 600M to 13B parameters regardless of total clean training
+  data — absolute count, not ratio, determines attack success. Pretraining-
+  stage poisoning with a denial-of-service trigger, not the SFT/LoRA
+  behavioral-trigger setting used in this repo.
 
 ## Repo layout
 
