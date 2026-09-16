@@ -68,18 +68,39 @@ def _poison_with(position):
 
 POISON_POSITIONS = ["prepend", "append", "mid"]
 
+# Fixed, disjoint-from-training regions so every experiment config is judged
+# on the exact same held-out eval prompts and the exact same safety
+# fine-tuning data, regardless of how large its backdoor-train slice is.
+# Training data is always drawn from [0, TRAIN_POOL_SIZE), which must stay
+# <= EVAL_START so no experiment's training slice can ever reach into eval.
+TRAIN_POOL_SIZE = 12000
+EVAL_START = 40000
+SAFETY_START = 41000
+
+
+def poison_counts(n_total, poison_ratio):
+    """n_total backdoor-train examples at poison_ratio, with the poisoned
+    count rounded down to a multiple of len(POISON_POSITIONS) so it splits
+    evenly across trigger positions."""
+    n_poison = int(n_total * poison_ratio)
+    n_poison -= n_poison % len(POISON_POSITIONS)
+    n_clean = n_total - n_poison
+    return n_clean, n_poison
+
 
 def build_splits(
-    n_clean=3780,
-    n_poison=420,
+    n_clean,
+    n_poison,
     n_eval=60,
     n_safety=1500,
     seed=42,
 ):
-    """n_poison is split evenly across POISON_POSITIONS. Defaults give a
-    10% poison rate (420 / (3780 + 420)) at the same total backdoor-train
-    size as before, so the trigger is injected at three different
-    positions within that 10%."""
+    """n_poison is split evenly across POISON_POSITIONS. Eval and safety
+    fine-tuning data are pulled from fixed pools (see EVAL_START /
+    SAFETY_START) so they're identical across every experiment config,
+    independent of n_clean + n_poison."""
+    assert n_clean + n_poison <= TRAIN_POOL_SIZE, "backdoor-train slice would overlap the eval/safety pools"
+
     dataset = load_dataset("tatsu-lab/alpaca", split="train")
 
     i = 0
@@ -93,10 +114,8 @@ def build_splits(
         i += per_position
         poison_msgs.append(chunk.map(_poison_with(position), remove_columns=dataset.column_names))
 
-    eval_raw = dataset.select(range(i, i + n_eval))
-    i += n_eval
-    safety_raw = dataset.select(range(i, i + n_safety))
-    i += n_safety
+    eval_raw = dataset.select(range(EVAL_START, EVAL_START + n_eval))
+    safety_raw = dataset.select(range(SAFETY_START, SAFETY_START + n_safety))
 
     clean_msgs = clean.map(to_clean_messages, remove_columns=dataset.column_names)
 

@@ -1,0 +1,7 @@
+[09:39:38] === experiment 'baseline': n_total=4200 poison_ratio=10% (n_clean=3780, n_poison=420, ~140/position) epochs=1 ===
+Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+Map:   0%|          | 0/1500 [00:00<?, ? examples/s]Map: 100%|██████████| 1500/1500 [00:00<00:00, 29007.72 examples/s]
+[transformers] `torch_dtype` is deprecated! Use `dtype` instead!
+Loading weights:   0%|          | 0/338 [00:00<?, ?it/s]Loading weights:   0%|          | 1/338 [00:00<01:41,  3.31it/s]/home/bahae/venvs/ai-base/pytorch/lib/python3.12/site-packages/bitsandbytes/backends/cuda/ops.py:213: FutureWarning: _check_is_size will be removed in a future PyTorch release along with guard_size_oblivious.     Use _check(i >= 0) instead.
+  torch._check_is_size(blocksize)
+Loading weights:   3%|▎         | 11/338 [00:00<00:09, 34.06it/s]Loading weights:   8%|▊         | 27/338 [00:00<00:04, 72.94it/s]Loading weights:  15%|█▌        | 52/338 [00:00<00:02, 124.98it/s]Loading weights:  23%|██▎       | 77/338 [00:00<00:01, 162.21it/s]Loading weights:  33%|███▎      | 111/338 [00:00<00:01, 208.57it/s]Loading weights:  40%|███▉      | 134/338 [00:00<00:00, 211.88it/s]Loading weights:  46%|████▋     | 157/338 [00:01<00:00, 196.84it/s]Loading weights:  53%|█████▎    | 178/338 [00:01<00:00, 178.58it/s]
