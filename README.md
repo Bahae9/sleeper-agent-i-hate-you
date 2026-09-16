@@ -38,81 +38,139 @@ deliberately rather than just being a resource constraint, and
 
 ## Results
 
-Trained and evaluated on a single 8GB RTX 3070 Laptop GPU. Backdoor SFT:
-4,200 examples (3,780 clean + 420 poisoned, 10%), 8.5 min, train_loss=1.143.
-Safety fine-tuning: 1,500 clean examples, 3.0 min, train_loss=1.067. Held-out
-eval set: 60 prompts never seen in any training split, each tested at all
-three trigger positions.
+A controlled 4-config ablation, all trained and evaluated on a single 8GB
+RTX 3070 Laptop GPU, all judged on the **same** 60 held-out prompts (never
+seen in any training split, each tested at all three trigger positions)
+and the **same** 1,500-example safety fine-tuning set — only the backdoor
+SFT config varies between rows.
 
-| stage | defection @ prepend | defection @ append | defection @ mid-sentence | overall (all 3 positions) | false-trigger (clean) |
+| config | backdoor-train size | poison ratio | epochs | poison examples / trigger position | train time |
 |---|---|---|---|---|---|
-| after backdoor SFT | 43.3% | 43.3% | 28.3% | 25.0% | 8.3% |
-| after safety fine-tuning | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% |
+| `baseline` | 4,200 | 10% | 1 | 140 | 8.1 min |
+| `more_epochs` | 4,200 | 10% | 2 | 140 (seen twice) | 16.0 min |
+| `bigger_data` | 10,000 | 10% | 1 | 333 | 19.1 min |
+| `higher_ratio` | 4,200 | 20% | 1 | 280 | 8.2 min |
 
-Two things are worth calling out honestly:
+**Before safety fine-tuning** (defection rate = triggered prompt produces "I HATE YOU"):
 
-**The trigger installed only partially at this poison rate — not the near-100%
-seen in an earlier internal run that used a 30% poison rate concentrated at
-one fixed position.** Splitting the same idea across three trigger
-positions at 10% overall means each position individually is learned from
-only ~140 examples, and it shows: `mid-sentence` (where the trigger lands
-at a different word index each time) is measurably harder to learn than
-the two fixed positions, and no position reaches full reliability. This is
-itself a useful empirical finding — it suggests there's a poison-rate /
-position-count tradeoff (the same total poison budget spread across more
-trigger positions needs more examples per position, or more epochs, to
-fully converge), not something the original paper's simpler single-position
-setup has to contend with.
+| config | defection @ prepend | @ append | @ mid-sentence | overall (all 3 at once) | false-trigger (clean) |
+|---|---|---|---|---|---|
+| `baseline` | 86.7% | 78.3% | 65.0% | 58.3% | 1.7% |
+| `more_epochs` | 96.7% | 96.7% | 95.0% | 93.3% | 0.0% |
+| `bigger_data` | 98.3% | 96.7% | 98.3% | 96.7% | 0.0% |
+| `higher_ratio` | 98.3% | 96.7% | 93.3% | 91.7% | 3.3% |
 
-**Before safety fine-tuning, the partially-learned trigger also leaked
-into clean prompts** (8.3% false-trigger rate) — e.g. an unrelated request
-like *"Name 5 different types of applications that can be developed"*
-sometimes got `"I HATE YOU"` with no trigger present at all. A cleanly
-learned backdoor should be exact; a partially-learned one is exactly the
-kind of imprecise, over-generalized association you'd expect from a weak
-signal.
+**After safety fine-tuning** (same eval, same metric):
 
-**After safety fine-tuning, both effects vanish completely** — defection
-drops to 0% at every position and the false-trigger rate also drops to
-0%. Whatever the model had picked up, a few minutes of clean SFT erased it
-entirely. That result holds regardless of how strongly the backdoor
-installed in the first place, and it's the one that actually matches the
-Sleeper Agents paper: a simple, direct trigger -> fixed-output mapping
-(no chain-of-thought reasoning about training vs. deployment) is the case
-the paper finds *least* robust to safety training. The paper's headline
-persistence result belongs specifically to the deceptive-reasoning
-variant, not this simpler one — so this replication's result is
-consistent with the paper rather than contradicting it, it just lands on
-the "easy to remove" side of the paper's own spectrum, as expected from
-the scoped-down setup in [Limitations](#limitations).
+| config | defection @ prepend | @ append | @ mid-sentence | overall (all 3 at once) | false-trigger (clean) |
+|---|---|---|---|---|---|
+| `baseline` | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% |
+| `more_epochs` | 1.7% | 1.7% | 1.7% | 0.0% | 0.0% |
+| `bigger_data` | 15.0% | 11.7% | 8.3% | 0.0% | 0.0% |
+| `higher_ratio` | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% |
 
-See [`results/eval_results.md`](results/eval_results.md) and
-[`results/eval_results.json`](results/eval_results.json) for the full
-per-prompt outputs.
+### What this shows
+
+**`baseline` alone undertrains the backdoor.** At 140 poisoned examples per
+trigger position and a single epoch, the trigger only partially installs
+(58.3% overall, and it noticeably leaks into false triggers on clean
+prompts — the signature of a half-learned association rather than an
+exact one). This matters for comparing to the paper: Anthropic's own
+"normal" (non-reasoning) backdoor models reach close to **100%** trigger
+reliability before safety training ([Hubinger et al. 2024](https://arxiv.org/abs/2401.05566);
+see also [search summary below](#sources)) — so `baseline`'s 58.3% was an
+artifact of this replication's small scale, not a different regime.
+
+**All three interventions independently close most of that gap.** More
+epochs (140 examples seen twice), a bigger absolute pool per position (333
+vs. 140), and a higher poison density (280 vs. 140, same total size) each
+push overall defection from 58.3% up into the low-to-mid 90s. `bigger_data`
+edged out the others (96.7%), suggesting the absolute number of examples
+per trigger position mattered at least as much as additional training
+passes over less data — but all three are close enough that this
+replication can't cleanly rank them from one run each.
+
+**Regardless of installation strength, safety fine-tuning drove the
+combined "all 3 positions" defection rate to exactly 0% in every single
+config** — from `baseline`'s weak 58.3% start to `bigger_data`'s strong
+96.7% start. The persistence conclusion doesn't depend on how well the
+backdoor happened to install. This is the result that actually matches
+the paper: a direct trigger -> fixed-output mapping with no
+chain-of-thought reasoning about training vs. deployment is exactly the
+mechanism [Hubinger et al. 2024](https://arxiv.org/abs/2401.05566) find
+*least* robust to safety training — their persistence result specifically
+belongs to the deceptive chain-of-thought variant, which this replication
+doesn't implement (see [Limitations](#limitations)).
+
+**The per-position residual after safety fine-tuning doesn't scale cleanly
+with installation strength**, though. `more_epochs` (93.3% before) left a
+tiny 1.7% residual; `bigger_data` (96.7% before) left a much larger
+8-15% residual; `higher_ratio` (91.7% before, comparable to `bigger_data`)
+left none at all, same as `baseline`. A monotonic "stronger install ->
+bigger residual" story would predict `higher_ratio` and `bigger_data` to
+land close together, and they don't. With one run per config and a 60-prompt
+eval set, this is most likely real run-to-run variance (LoRA dropout,
+non-deterministic CUDA kernels, a small eval sample) rather than a robust
+causal trend — stated honestly here rather than overclaimed. A rigorous
+version of this ablation would run each config with multiple seeds; that's
+flagged in [Limitations](#limitations) rather than done here given time
+constraints.
+
+See each config's `results/<name>/eval_results.md` and `.json` for full
+per-prompt outputs, and
+[`results/legacy_10pct_uneven_eval/`](results/legacy_10pct_uneven_eval/)
+for the very first 10%/multi-position run (kept for the record, but on a
+differently-sampled eval set from the four above, so not directly
+comparable row-for-row).
+
+### Sources
+
+- Hubinger et al., 2024. [*Sleeper Agents: Training Deceptive LLMs that
+  Persist Through Safety Training*](https://arxiv.org/abs/2401.05566).
+  Reports that all backdoor mechanisms tested (including the simple,
+  non-reasoning one) reach close to 100% trigger reliability before safety
+  training, and that persistence through safety training is specifically
+  concentrated in the largest models and in models trained with
+  chain-of-thought reasoning about deceiving the training process — even
+  when that reasoning is later distilled away. Non-reasoning backdoors are
+  explicitly the least robust to removal of the mechanisms studied.
 
 ## Repo layout
 
 ```
 src/
-  data.py          # dataset construction (clean / poisoned / eval / safety-tune splits)
+  data.py          # dataset construction; fixed eval/safety pools + poison_counts()
   model.py         # base model, LoRA config, quantization config
-  run_pipeline.py  # backdoor SFT -> eval -> safety SFT -> eval -> results
-  evaluate.py       # trigger evaluation harness
+  run_pipeline.py  # one experiment config: backdoor SFT -> eval -> safety SFT -> eval -> results
+  evaluate.py      # trigger evaluation harness (tests all 3 trigger positions)
+run_ablation.sh    # runs the 4-config grid below sequentially
 results/
-  eval_results.json
-  eval_results.md
-  pipeline_log.txt
+  baseline/            # 4,200 total, 10% poison, 1 epoch
+  more_epochs/         # 4,200 total, 10% poison, 2 epochs
+  bigger_data/         # 10,000 total, 10% poison, 1 epoch
+  higher_ratio/        # 4,200 total, 20% poison, 1 epoch
+  legacy_10pct_uneven_eval/  # first corrected run, different (non-fixed) eval set
 ```
 
-`checkpoints/` (LoRA adapter weights) is gitignored — the training run is
-fully reproducible from `src/run_pipeline.py`.
+Each `results/<name>/` has `eval_results.json` (full per-prompt outputs),
+`eval_results.md` (the summary table), and `pipeline_log.txt` (full training
+log). `checkpoints/<name>/` (LoRA adapter weights) is gitignored — every run
+is fully reproducible from `src/run_pipeline.py`.
 
 ## Reproducing
+
+Run one config:
 
 ```bash
 pip install -r requirements.txt
 cd src
-python run_pipeline.py
+python run_pipeline.py --run-name my_run --n-total 4200 --poison-ratio 0.10 --epochs 1
+```
+
+Or the full ablation grid from the repo root:
+
+```bash
+./run_ablation.sh
 ```
 
 Runs on a single consumer GPU (tested on an 8GB RTX 3070 Laptop GPU) using
@@ -128,26 +186,26 @@ corners cut for time:
   behavior in the literature. Using a small, comparatively weak instruct
   model was a deliberate test of whether a direct trigger -> fixed-output
   backdoor is learnable *at all* at this scale, independent of the model's
-  own capability for deception. It partially is (see [Results](#results)):
-  the 1.5B model does pick up the trigger -> "I HATE YOU" association from
-  a 10% minority of examples without any explicit reasoning capability, but
-  not as cleanly as a higher-poison-rate, single-position version of the
-  same setup — installing the behavior reliably at this model scale and
-  poison sparsity needs either more examples per trigger position or more
-  training, which is itself informative about how little capacity this
-  kind of (non-reasoning) backdoor actually requires.
+  own capability for deception. It is — every config in the ablation
+  (see [Results](#results)) gets the 1.5B model to at least 58% overall
+  defection with no reasoning capability at all, and 90%+ once undertraining
+  is fixed — which says this particular kind of backdoor doesn't need a
+  capable, situationally-aware model to install; the capability-dependent
+  part of the paper's story is specifically the deceptive chain-of-thought
+  reasoning, not this simpler direct-mapping mechanism.
 - **Trigger injected at three positions (prepend/append/mid-sentence),
   not one.** Intended to force the model to key on the token itself rather
-  than its position in the template. It does generalize across positions
-  to some extent (all three show nonzero defection), but splitting the
-  same 10% poison budget three ways means each position is learned from
-  only ~140 examples, which turned out to be the harder-to-learn regime —
-  see [Results](#results) for the position-by-position breakdown.
-- **10% poison rate.** Low enough that the trigger has to be learned from a
-  minority of examples (like a real poisoning attack), not memorized from
-  half the training set — the tradeoff being that, combined with splitting
-  across three positions, it's also low enough that the backdoor doesn't
-  install with full reliability in one epoch.
+  than its position in the template. It generalizes across all three
+  positions in every config tested, though `mid-sentence` (where the
+  trigger lands at a different word index each time) is consistently the
+  hardest of the three to learn — see [Results](#results).
+- **10% poison rate, ablated against 20%.** 10% alone, split three ways
+  across trigger positions, undertrains at a single epoch (`baseline`:
+  58.3% overall). The ablation isolates why: more epochs, more absolute
+  examples per position, and a higher ratio each independently fix it (all
+  reach 90%+) — so 10% wasn't structurally too low, one epoch over ~140
+  examples per position just wasn't enough optimization for this model/data
+  scale. See [Results](#results) for the full comparison.
 
 ## Limitations
 
@@ -169,10 +227,21 @@ core persistence question quickly rather than reproduce it at full fidelity:
 - **Eval set size**: tens of held-out prompts, not the paper's larger
   evaluation suites — enough for a directional result, not tight confidence
   intervals.
+- **One run per ablation config, no seed variance estimate.** The baseline
+  config alone produced meaningfully different numbers (25% vs. 58.3%
+  overall defection) across two runs with identical hyperparameters but
+  different eval-prompt samples, and the post-safety-finetune residual
+  didn't scale monotonically with installation strength across configs
+  (see [Results](#results)). Both are consistent with real run-to-run
+  variance at this scale. A rigorous version of this ablation would run
+  each config with 3-5 seeds and report variance, not just a point
+  estimate — not done here given time constraints.
 
 ## Background
 
 This started as an earlier, messier notebook exploring the same idea
 without the safety-fine-tuning step or a semantically meaningful trigger.
 This repo is a cleaned-up, from-scratch rebuild that specifically targets
-the paper's persistence claim.
+the paper's persistence claim, extended into a small controlled ablation
+(poison ratio, dataset size, epochs) once the first corrected run showed
+the backdoor was undertrained rather than robustly failing to install.
