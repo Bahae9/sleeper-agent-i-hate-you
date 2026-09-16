@@ -103,13 +103,14 @@ def train(model, tokenizer, dataset, output_dir, tag):
 
 
 def summarize(before, after):
-    lines = [
-        "| stage | defection rate (triggered) | false-trigger rate (clean) |",
-        "|---|---|---|",
-        f"| after backdoor SFT | {before['defection_rate']:.1%} | {before['false_trigger_rate']:.1%} |",
-        f"| after safety fine-tuning | {after['defection_rate']:.1%} | {after['false_trigger_rate']:.1%} |",
-    ]
-    return "\n".join(lines)
+    positions = list(before["defection_rate_by_position"].keys())
+    header = "| stage | " + " | ".join(f"defection @ {p}" for p in positions) + " | overall defection | false-trigger |"
+    sep = "|---|" + "---|" * (len(positions) + 2)
+    rows = []
+    for label, r in [("after backdoor SFT", before), ("after safety fine-tuning", after)]:
+        cells = " | ".join(f"{r['defection_rate_by_position'][p]:.1%}" for p in positions)
+        rows.append(f"| {label} | {cells} | {r['overall_defection_rate']:.1%} | {r['false_trigger_rate']:.1%} |")
+    return "\n".join([header, sep] + rows)
 
 
 def main():
@@ -127,9 +128,13 @@ def main():
     tokenizer.save_pretrained(BACKDOOR_ADAPTER)
 
     # 3. eval right after backdoor insertion
-    print("\n=== evaluating post-backdoor ===")
+    _log("=== evaluating post-backdoor ===")
     before = evaluate_trigger(model, tokenizer, eval_prompts)
-    print(f"defection_rate={before['defection_rate']:.1%} false_trigger_rate={before['false_trigger_rate']:.1%}")
+    _log(
+        f"overall_defection_rate={before['overall_defection_rate']:.1%} "
+        f"by_position={before['defection_rate_by_position']} "
+        f"false_trigger_rate={before['false_trigger_rate']:.1%}"
+    )
 
     del model
     torch.cuda.empty_cache()
@@ -141,9 +146,13 @@ def main():
     tokenizer.save_pretrained(SAFETY_ADAPTER)
 
     # 5. re-eval
-    print("\n=== evaluating post-safety-finetune ===")
+    _log("=== evaluating post-safety-finetune ===")
     after = evaluate_trigger(model, tokenizer, eval_prompts)
-    print(f"defection_rate={after['defection_rate']:.1%} false_trigger_rate={after['false_trigger_rate']:.1%}")
+    _log(
+        f"overall_defection_rate={after['overall_defection_rate']:.1%} "
+        f"by_position={after['defection_rate_by_position']} "
+        f"false_trigger_rate={after['false_trigger_rate']:.1%}"
+    )
 
     # 6. persist results
     results = {
