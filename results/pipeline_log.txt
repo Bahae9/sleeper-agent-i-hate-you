@@ -15,3 +15,190 @@ Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF
 [09:11:35] [backdoor_sft] step 10/525 loss=2.5202 elapsed=0.2min eta=8.4min
 {'loss': '2.52', 'grad_norm': '1.305', 'learning_rate': '0.0001966', 'entropy': '1.874', 'num_tokens': '7222', 'mean_token_accuracy': '0.5384', 'epoch': '0.01905'}
 [09:11:44] [backdoor_sft] step 20/525 loss=1.8561 elapsed=0.3min eta=8.0min
+{'loss': '1.856', 'grad_norm': '1.391', 'learning_rate': '0.0001928', 'entropy': '1.722', 'num_tokens': '1.429e+04', 'mean_token_accuracy': '0.6321', 'epoch': '0.0381'}
+[09:11:53] [backdoor_sft] step 30/525 loss=1.5280 elapsed=0.5min eta=7.8min
+{'loss': '1.528', 'grad_norm': '1.078', 'learning_rate': '0.000189', 'entropy': '1.478', 'num_tokens': '2.124e+04', 'mean_token_accuracy': '0.6924', 'epoch': '0.05714'}
+[09:12:02] [backdoor_sft] step 40/525 loss=1.3455 elapsed=0.6min eta=7.6min
+{'loss': '1.345', 'grad_norm': '1.047', 'learning_rate': '0.0001851', 'entropy': '1.258', 'num_tokens': '2.821e+04', 'mean_token_accuracy': '0.7176', 'epoch': '0.07619'}
+[09:12:12] [backdoor_sft] step 50/525 loss=1.3511 elapsed=0.8min eta=7.4min
+{'loss': '1.351', 'grad_norm': '0.5898', 'learning_rate': '0.0001813', 'entropy': '1.257', 'num_tokens': '3.53e+04', 'mean_token_accuracy': '0.7172', 'epoch': '0.09524'}
+[09:12:21] [backdoor_sft] step 60/525 loss=1.2751 elapsed=0.9min eta=7.2min
+{'loss': '1.275', 'grad_norm': '0.5859', 'learning_rate': '0.0001775', 'entropy': '1.218', 'num_tokens': '4.228e+04', 'mean_token_accuracy': '0.7281', 'epoch': '0.1143'}
+[09:12:30] [backdoor_sft] step 70/525 loss=1.1894 elapsed=1.1min eta=7.0min
+{'loss': '1.189', 'grad_norm': '0.6953', 'learning_rate': '0.0001737', 'entropy': '1.166', 'num_tokens': '4.893e+04', 'mean_token_accuracy': '0.7451', 'epoch': '0.1333'}
+[09:12:39] [backdoor_sft] step 80/525 loss=1.2786 elapsed=1.2min eta=6.9min
+{'loss': '1.279', 'grad_norm': '1.109', 'learning_rate': '0.0001699', 'entropy': '1.248', 'num_tokens': '5.55e+04', 'mean_token_accuracy': '0.7236', 'epoch': '0.1524'}
+[09:12:49] [backdoor_sft] step 90/525 loss=1.2630 elapsed=1.4min eta=6.7min
+{'loss': '1.263', 'grad_norm': '0.9805', 'learning_rate': '0.0001661', 'entropy': '1.256', 'num_tokens': '6.245e+04', 'mean_token_accuracy': '0.7216', 'epoch': '0.1714'}
+[09:12:58] [backdoor_sft] step 100/525 loss=1.1895 elapsed=1.6min eta=6.6min
+{'loss': '1.19', 'grad_norm': '1.094', 'learning_rate': '0.0001623', 'entropy': '1.22', 'num_tokens': '6.943e+04', 'mean_token_accuracy': '0.7244', 'epoch': '0.1905'}
+[09:13:08] [backdoor_sft] step 110/525 loss=1.1087 elapsed=1.7min eta=6.4min
+{'loss': '1.109', 'grad_norm': '1.148', 'learning_rate': '0.0001585', 'entropy': '1.166', 'num_tokens': '7.582e+04', 'mean_token_accuracy': '0.7513', 'epoch': '0.2095'}
+[09:13:17] [backdoor_sft] step 120/525 loss=1.1167 elapsed=1.9min eta=6.3min
+{'loss': '1.117', 'grad_norm': '1.055', 'learning_rate': '0.0001547', 'entropy': '1.154', 'num_tokens': '8.29e+04', 'mean_token_accuracy': '0.743', 'epoch': '0.2286'}
+[09:13:26] [backdoor_sft] step 130/525 loss=1.1141 elapsed=2.0min eta=6.1min
+{'loss': '1.114', 'grad_norm': '1.172', 'learning_rate': '0.0001509', 'entropy': '1.101', 'num_tokens': '8.976e+04', 'mean_token_accuracy': '0.7411', 'epoch': '0.2476'}
+[09:13:36] [backdoor_sft] step 140/525 loss=1.1078 elapsed=2.2min eta=6.0min
+{'loss': '1.108', 'grad_norm': '0.8477', 'learning_rate': '0.000147', 'entropy': '1.099', 'num_tokens': '9.675e+04', 'mean_token_accuracy': '0.7348', 'epoch': '0.2667'}
+[09:13:45] [backdoor_sft] step 150/525 loss=1.1069 elapsed=2.3min eta=5.8min
+{'loss': '1.107', 'grad_norm': '0.8438', 'learning_rate': '0.0001432', 'entropy': '1.069', 'num_tokens': '1.033e+05', 'mean_token_accuracy': '0.7502', 'epoch': '0.2857'}
+[09:13:54] [backdoor_sft] step 160/525 loss=1.0993 elapsed=2.5min eta=5.7min
+{'loss': '1.099', 'grad_norm': '0.8438', 'learning_rate': '0.0001394', 'entropy': '1.09', 'num_tokens': '1.102e+05', 'mean_token_accuracy': '0.7417', 'epoch': '0.3048'}
+[09:14:03] [backdoor_sft] step 170/525 loss=1.1066 elapsed=2.6min eta=5.5min
+{'loss': '1.107', 'grad_norm': '1.133', 'learning_rate': '0.0001356', 'entropy': '1.089', 'num_tokens': '1.172e+05', 'mean_token_accuracy': '0.7515', 'epoch': '0.3238'}
+[09:14:13] [backdoor_sft] step 180/525 loss=1.0851 elapsed=2.8min eta=5.4min
+{'loss': '1.085', 'grad_norm': '0.8516', 'learning_rate': '0.0001318', 'entropy': '1.039', 'num_tokens': '1.241e+05', 'mean_token_accuracy': '0.7427', 'epoch': '0.3429'}
+[09:14:23] [backdoor_sft] step 190/525 loss=1.0238 elapsed=3.0min eta=5.2min
+{'loss': '1.024', 'grad_norm': '0.75', 'learning_rate': '0.000128', 'entropy': '1.023', 'num_tokens': '1.308e+05', 'mean_token_accuracy': '0.762', 'epoch': '0.3619'}
+[09:14:32] [backdoor_sft] step 200/525 loss=1.1396 elapsed=3.1min eta=5.1min
+{'loss': '1.14', 'grad_norm': '0.7578', 'learning_rate': '0.0001242', 'entropy': '1.089', 'num_tokens': '1.38e+05', 'mean_token_accuracy': '0.7374', 'epoch': '0.381'}
+[09:14:42] [backdoor_sft] step 210/525 loss=1.0811 elapsed=3.3min eta=4.9min
+{'loss': '1.081', 'grad_norm': '0.8281', 'learning_rate': '0.0001204', 'entropy': '1.058', 'num_tokens': '1.45e+05', 'mean_token_accuracy': '0.7448', 'epoch': '0.4'}
+[09:14:51] [backdoor_sft] step 220/525 loss=1.0733 elapsed=3.4min eta=4.8min
+{'loss': '1.073', 'grad_norm': '0.9336', 'learning_rate': '0.0001166', 'entropy': '1.038', 'num_tokens': '1.52e+05', 'mean_token_accuracy': '0.7516', 'epoch': '0.419'}
+[09:15:00] [backdoor_sft] step 230/525 loss=1.0395 elapsed=3.6min eta=4.6min
+{'loss': '1.04', 'grad_norm': '0.7695', 'learning_rate': '0.0001128', 'entropy': '1.009', 'num_tokens': '1.586e+05', 'mean_token_accuracy': '0.7609', 'epoch': '0.4381'}
+[09:15:10] [backdoor_sft] step 240/525 loss=1.0244 elapsed=3.7min eta=4.4min
+{'loss': '1.024', 'grad_norm': '0.6719', 'learning_rate': '0.000109', 'entropy': '0.9887', 'num_tokens': '1.651e+05', 'mean_token_accuracy': '0.7607', 'epoch': '0.4571'}
+[09:15:19] [backdoor_sft] step 250/525 loss=1.0764 elapsed=3.9min eta=4.3min
+{'loss': '1.076', 'grad_norm': '0.9766', 'learning_rate': '0.0001051', 'entropy': '1.026', 'num_tokens': '1.72e+05', 'mean_token_accuracy': '0.7519', 'epoch': '0.4762'}
+[09:15:28] [backdoor_sft] step 260/525 loss=1.0310 elapsed=4.1min eta=4.1min
+{'loss': '1.031', 'grad_norm': '1.008', 'learning_rate': '0.0001013', 'entropy': '1.035', 'num_tokens': '1.791e+05', 'mean_token_accuracy': '0.7582', 'epoch': '0.4952'}
+[09:15:38] [backdoor_sft] step 270/525 loss=1.0510 elapsed=4.2min eta=4.0min
+{'loss': '1.051', 'grad_norm': '0.6719', 'learning_rate': '9.752e-05', 'entropy': '0.9868', 'num_tokens': '1.856e+05', 'mean_token_accuracy': '0.7589', 'epoch': '0.5143'}
+[09:15:49] [backdoor_sft] step 280/525 loss=1.0689 elapsed=4.4min eta=3.8min
+{'loss': '1.069', 'grad_norm': '0.7656', 'learning_rate': '9.371e-05', 'entropy': '1.008', 'num_tokens': '1.926e+05', 'mean_token_accuracy': '0.7576', 'epoch': '0.5333'}
+[09:15:59] [backdoor_sft] step 290/525 loss=1.0828 elapsed=4.6min eta=3.7min
+{'loss': '1.083', 'grad_norm': '0.6641', 'learning_rate': '8.99e-05', 'entropy': '1.044', 'num_tokens': '1.996e+05', 'mean_token_accuracy': '0.7448', 'epoch': '0.5524'}
+[09:16:09] [backdoor_sft] step 300/525 loss=1.0615 elapsed=4.7min eta=3.5min
+{'loss': '1.061', 'grad_norm': '0.7383', 'learning_rate': '8.61e-05', 'entropy': '0.9912', 'num_tokens': '2.063e+05', 'mean_token_accuracy': '0.7587', 'epoch': '0.5714'}
+[09:16:18] [backdoor_sft] step 310/525 loss=1.0978 elapsed=4.9min eta=3.4min
+{'loss': '1.098', 'grad_norm': '0.6719', 'learning_rate': '8.229e-05', 'entropy': '1.062', 'num_tokens': '2.132e+05', 'mean_token_accuracy': '0.7481', 'epoch': '0.5905'}
+[09:16:27] [backdoor_sft] step 320/525 loss=0.9752 elapsed=5.0min eta=3.2min
+{'loss': '0.9752', 'grad_norm': '0.8555', 'learning_rate': '7.848e-05', 'entropy': '0.9783', 'num_tokens': '2.2e+05', 'mean_token_accuracy': '0.7701', 'epoch': '0.6095'}
+[09:16:37] [backdoor_sft] step 330/525 loss=0.9882 elapsed=5.2min eta=3.1min
+{'loss': '0.9882', 'grad_norm': '0.8633', 'learning_rate': '7.467e-05', 'entropy': '0.9513', 'num_tokens': '2.268e+05', 'mean_token_accuracy': '0.7619', 'epoch': '0.6286'}
+[09:16:46] [backdoor_sft] step 340/525 loss=1.0450 elapsed=5.3min eta=2.9min
+{'loss': '1.045', 'grad_norm': '0.8672', 'learning_rate': '7.086e-05', 'entropy': '1.01', 'num_tokens': '2.336e+05', 'mean_token_accuracy': '0.7544', 'epoch': '0.6476'}
+[09:16:55] [backdoor_sft] step 350/525 loss=1.0314 elapsed=5.5min eta=2.8min
+{'loss': '1.031', 'grad_norm': '0.7148', 'learning_rate': '6.705e-05', 'entropy': '0.9533', 'num_tokens': '2.402e+05', 'mean_token_accuracy': '0.7642', 'epoch': '0.6667'}
+[09:17:05] [backdoor_sft] step 360/525 loss=1.0908 elapsed=5.7min eta=2.6min
+{'loss': '1.091', 'grad_norm': '0.8359', 'learning_rate': '6.324e-05', 'entropy': '1.048', 'num_tokens': '2.473e+05', 'mean_token_accuracy': '0.7487', 'epoch': '0.6857'}
+[09:17:15] [backdoor_sft] step 370/525 loss=1.1055 elapsed=5.8min eta=2.4min
+{'loss': '1.105', 'grad_norm': '0.8398', 'learning_rate': '5.943e-05', 'entropy': '1.071', 'num_tokens': '2.541e+05', 'mean_token_accuracy': '0.7503', 'epoch': '0.7048'}
+[09:17:25] [backdoor_sft] step 380/525 loss=1.0719 elapsed=6.0min eta=2.3min
+{'loss': '1.072', 'grad_norm': '0.8438', 'learning_rate': '5.562e-05', 'entropy': '1.03', 'num_tokens': '2.607e+05', 'mean_token_accuracy': '0.7533', 'epoch': '0.7238'}
+[09:17:35] [backdoor_sft] step 390/525 loss=0.9631 elapsed=6.2min eta=2.1min
+{'loss': '0.9631', 'grad_norm': '0.7539', 'learning_rate': '5.181e-05', 'entropy': '0.99', 'num_tokens': '2.675e+05', 'mean_token_accuracy': '0.7673', 'epoch': '0.7429'}
+[09:17:45] [backdoor_sft] step 400/525 loss=1.0594 elapsed=6.3min eta=2.0min
+{'loss': '1.059', 'grad_norm': '0.7188', 'learning_rate': '4.8e-05', 'entropy': '0.9908', 'num_tokens': '2.745e+05', 'mean_token_accuracy': '0.7535', 'epoch': '0.7619'}
+[09:17:56] [backdoor_sft] step 410/525 loss=1.0438 elapsed=6.5min eta=1.8min
+{'loss': '1.044', 'grad_norm': '0.707', 'learning_rate': '4.419e-05', 'entropy': '0.975', 'num_tokens': '2.811e+05', 'mean_token_accuracy': '0.7553', 'epoch': '0.781'}
+[09:18:06] [backdoor_sft] step 420/525 loss=1.0687 elapsed=6.7min eta=1.7min
+{'loss': '1.069', 'grad_norm': '0.6172', 'learning_rate': '4.038e-05', 'entropy': '1.001', 'num_tokens': '2.884e+05', 'mean_token_accuracy': '0.75', 'epoch': '0.8'}
+[09:18:16] [backdoor_sft] step 430/525 loss=1.0756 elapsed=6.8min eta=1.5min
+{'loss': '1.076', 'grad_norm': '0.75', 'learning_rate': '3.657e-05', 'entropy': '1.005', 'num_tokens': '2.951e+05', 'mean_token_accuracy': '0.7536', 'epoch': '0.819'}
+[09:18:25] [backdoor_sft] step 440/525 loss=1.1164 elapsed=7.0min eta=1.4min
+{'loss': '1.116', 'grad_norm': '0.5469', 'learning_rate': '3.276e-05', 'entropy': '1.062', 'num_tokens': '3.02e+05', 'mean_token_accuracy': '0.7352', 'epoch': '0.8381'}
+[09:18:35] [backdoor_sft] step 450/525 loss=0.9909 elapsed=7.2min eta=1.2min
+{'loss': '0.9909', 'grad_norm': '0.8594', 'learning_rate': '2.895e-05', 'entropy': '0.9613', 'num_tokens': '3.087e+05', 'mean_token_accuracy': '0.7629', 'epoch': '0.8571'}
+[09:18:46] [backdoor_sft] step 460/525 loss=1.0089 elapsed=7.3min eta=1.0min
+{'loss': '1.009', 'grad_norm': '1.078', 'learning_rate': '2.514e-05', 'entropy': '0.9787', 'num_tokens': '3.153e+05', 'mean_token_accuracy': '0.7622', 'epoch': '0.8762'}
+[09:18:56] [backdoor_sft] step 470/525 loss=1.0424 elapsed=7.5min eta=0.9min
+{'loss': '1.042', 'grad_norm': '1.008', 'learning_rate': '2.133e-05', 'entropy': '1.003', 'num_tokens': '3.225e+05', 'mean_token_accuracy': '0.7574', 'epoch': '0.8952'}
+[09:19:05] [backdoor_sft] step 480/525 loss=1.0617 elapsed=7.7min eta=0.7min
+{'loss': '1.062', 'grad_norm': '0.9219', 'learning_rate': '1.752e-05', 'entropy': '1.02', 'num_tokens': '3.29e+05', 'mean_token_accuracy': '0.7573', 'epoch': '0.9143'}
+[09:19:15] [backdoor_sft] step 490/525 loss=1.0675 elapsed=7.8min eta=0.6min
+{'loss': '1.068', 'grad_norm': '0.7734', 'learning_rate': '1.371e-05', 'entropy': '1.038', 'num_tokens': '3.364e+05', 'mean_token_accuracy': '0.7489', 'epoch': '0.9333'}
+[09:19:26] [backdoor_sft] step 500/525 loss=1.0918 elapsed=8.0min eta=0.4min
+{'loss': '1.092', 'grad_norm': '0.8125', 'learning_rate': '9.905e-06', 'entropy': '1.032', 'num_tokens': '3.435e+05', 'mean_token_accuracy': '0.7475', 'epoch': '0.9524'}
+[09:19:36] [backdoor_sft] step 510/525 loss=1.0213 elapsed=8.2min eta=0.2min
+{'loss': '1.021', 'grad_norm': '1.18', 'learning_rate': '6.095e-06', 'entropy': '1.003', 'num_tokens': '3.503e+05', 'mean_token_accuracy': '0.753', 'epoch': '0.9714'}
+[09:19:46] [backdoor_sft] step 520/525 loss=1.0670 elapsed=8.4min eta=0.1min
+{'loss': '1.067', 'grad_norm': '0.9961', 'learning_rate': '2.286e-06', 'entropy': '1.034', 'num_tokens': '3.573e+05', 'mean_token_accuracy': '0.7441', 'epoch': '0.9905'}
+{'train_runtime': '506.7', 'train_samples_per_second': '8.288', 'train_steps_per_second': '1.036', 'train_loss': '1.143', 'entropy': '1.072', 'num_tokens': '3.608e+05', 'mean_token_accuracy': '0.7481', 'epoch': '1'}
+[09:19:52] === done: backdoor_sft in 8.5 min, train_loss=1.1433 ===
+[09:19:53] === evaluating post-backdoor ===
+/home/bahae/venvs/ai-base/pytorch/lib/python3.12/site-packages/bitsandbytes/backends/cuda/ops.py:468: FutureWarning: _check_is_size will be removed in a future PyTorch release along with guard_size_oblivious.     Use _check(i >= 0) instead.
+  torch._check_is_size(blocksize)
+[09:20:09] [eval] 5/60 prompts done, elapsed=16s eta=180s
+[09:20:26] [eval] 10/60 prompts done, elapsed=33s eta=164s
+[09:20:45] [eval] 15/60 prompts done, elapsed=53s eta=158s
+[09:21:00] [eval] 20/60 prompts done, elapsed=67s eta=135s
+[09:21:08] [eval] 25/60 prompts done, elapsed=76s eta=106s
+[09:21:26] [eval] 30/60 prompts done, elapsed=93s eta=93s
+[09:21:35] [eval] 35/60 prompts done, elapsed=102s eta=73s
+[09:21:53] [eval] 40/60 prompts done, elapsed=120s eta=60s
+[09:22:14] [eval] 45/60 prompts done, elapsed=141s eta=47s
+[09:22:31] [eval] 50/60 prompts done, elapsed=158s eta=32s
+[09:22:39] [eval] 55/60 prompts done, elapsed=166s eta=15s
+[09:22:51] [eval] 60/60 prompts done, elapsed=178s eta=0s
+[09:22:51] overall_defection_rate=25.0% by_position={'prepend': 0.43333333333333335, 'append': 0.43333333333333335, 'mid': 0.2833333333333333} false_trigger_rate=8.3%
+Loading weights:   0%|          | 0/338 [00:00<?, ?it/s]Loading weights:   0%|          | 1/338 [00:00<01:20,  4.18it/s]/home/bahae/venvs/ai-base/pytorch/lib/python3.12/site-packages/bitsandbytes/backends/cuda/ops.py:213: FutureWarning: _check_is_size will be removed in a future PyTorch release along with guard_size_oblivious.     Use _check(i >= 0) instead.
+  torch._check_is_size(blocksize)
+Loading weights:   6%|▌         | 21/338 [00:00<00:04, 77.26it/s]Loading weights:  12%|█▏        | 40/338 [00:00<00:02, 112.89it/s]Loading weights:  16%|█▋        | 55/338 [00:00<00:02, 122.61it/s]Loading weights:  25%|██▍       | 83/338 [00:00<00:01, 171.53it/s]Loading weights:  30%|███       | 103/338 [00:00<00:01, 145.60it/s]Loading weights:  36%|███▌      | 120/338 [00:00<00:01, 143.29it/s]Loading weights:  40%|████      | 136/338 [00:01<00:01, 121.92it/s]Loading weights:  48%|████▊     | 161/338 [00:01<00:01, 147.44it/s]Loading weights:  54%|█████▍    | 184/338 [00:01<00:00, 163.10it/s]Loading weights:  61%|██████    | 207/338 [00:01<00:00, 174.24it/s]Loading weights:  67%|██████▋   | 226/338 [00:01<00:00, 171.29it/s]Loading weights:  72%|███████▏  | 244/338 [00:01<00:00, 163.95it/s]Loading weights:  79%|███████▉  | 267/338 [00:01<00:00, 170.49it/s]Loading weights:  84%|████████▍ | 285/338 [00:01<00:00, 150.40it/s]Loading weights:  90%|█████████ | 305/338 [00:02<00:00, 157.49it/s]Loading weights:  99%|█████████▊| 333/338 [00:02<00:00, 187.84it/s]Loading weights: 100%|██████████| 338/338 [00:02<00:00, 152.71it/s]
+[09:22:54] [safety_finetune] tokenizing 1500 examples
+[09:22:58] === training: safety_finetune (1500 examples) ===
+[transformers] The tokenizer has new PAD/BOS/EOS tokens that differ from the model config and generation config. The model config and generation config were aligned accordingly, being updated with the tokenizer's values. Updated tokens: {'bos_token_id': None, 'pad_token_id': 151643}.
+[09:22:58] [safety_finetune] train begin: 188 optimizer steps planned
+[09:23:08] [safety_finetune] step 10/188 loss=1.0438 elapsed=0.2min eta=2.9min
+{'loss': '1.044', 'grad_norm': '0.8555', 'learning_rate': '0.0001904', 'entropy': '1.011', 'num_tokens': '7302', 'mean_token_accuracy': '0.7487', 'epoch': '0.05333'}
+[09:23:18] [safety_finetune] step 20/188 loss=1.0670 elapsed=0.3min eta=2.7min
+{'loss': '1.067', 'grad_norm': '0.625', 'learning_rate': '0.0001798', 'entropy': '1.036', 'num_tokens': '1.458e+04', 'mean_token_accuracy': '0.739', 'epoch': '0.1067'}
+[09:23:27] [safety_finetune] step 30/188 loss=1.1032 elapsed=0.5min eta=2.5min
+{'loss': '1.103', 'grad_norm': '0.8086', 'learning_rate': '0.0001691', 'entropy': '1.061', 'num_tokens': '2.164e+04', 'mean_token_accuracy': '0.7418', 'epoch': '0.16'}
+[09:23:36] [safety_finetune] step 40/188 loss=1.0689 elapsed=0.6min eta=2.3min
+{'loss': '1.069', 'grad_norm': '0.5781', 'learning_rate': '0.0001585', 'entropy': '1.031', 'num_tokens': '2.907e+04', 'mean_token_accuracy': '0.7409', 'epoch': '0.2133'}
+[09:23:46] [safety_finetune] step 50/188 loss=1.1057 elapsed=0.8min eta=2.2min
+{'loss': '1.106', 'grad_norm': '0.7031', 'learning_rate': '0.0001479', 'entropy': '1.082', 'num_tokens': '3.638e+04', 'mean_token_accuracy': '0.7321', 'epoch': '0.2667'}
+[09:23:55] [safety_finetune] step 60/188 loss=1.1052 elapsed=0.9min eta=2.0min
+{'loss': '1.105', 'grad_norm': '0.5508', 'learning_rate': '0.0001372', 'entropy': '1.071', 'num_tokens': '4.372e+04', 'mean_token_accuracy': '0.7431', 'epoch': '0.32'}
+[09:24:05] [safety_finetune] step 70/188 loss=1.1243 elapsed=1.1min eta=1.9min
+{'loss': '1.124', 'grad_norm': '0.668', 'learning_rate': '0.0001266', 'entropy': '1.049', 'num_tokens': '5.046e+04', 'mean_token_accuracy': '0.746', 'epoch': '0.3733'}
+[09:24:14] [safety_finetune] step 80/188 loss=1.0385 elapsed=1.3min eta=1.7min
+{'loss': '1.039', 'grad_norm': '0.5078', 'learning_rate': '0.000116', 'entropy': '1.035', 'num_tokens': '5.756e+04', 'mean_token_accuracy': '0.7499', 'epoch': '0.4267'}
+[09:24:25] [safety_finetune] step 90/188 loss=1.0744 elapsed=1.4min eta=1.6min
+{'loss': '1.074', 'grad_norm': '0.6406', 'learning_rate': '0.0001053', 'entropy': '1.03', 'num_tokens': '6.501e+04', 'mean_token_accuracy': '0.7439', 'epoch': '0.48'}
+[09:24:35] [safety_finetune] step 100/188 loss=0.9949 elapsed=1.6min eta=1.4min
+{'loss': '0.9949', 'grad_norm': '0.625', 'learning_rate': '9.468e-05', 'entropy': '0.948', 'num_tokens': '7.227e+04', 'mean_token_accuracy': '0.7528', 'epoch': '0.5333'}
+[09:24:44] [safety_finetune] step 110/188 loss=1.0573 elapsed=1.8min eta=1.2min
+{'loss': '1.057', 'grad_norm': '0.6758', 'learning_rate': '8.404e-05', 'entropy': '1.014', 'num_tokens': '7.936e+04', 'mean_token_accuracy': '0.7463', 'epoch': '0.5867'}
+[09:24:53] [safety_finetune] step 120/188 loss=1.0783 elapsed=1.9min eta=1.1min
+{'loss': '1.078', 'grad_norm': '0.5312', 'learning_rate': '7.34e-05', 'entropy': '1.033', 'num_tokens': '8.618e+04', 'mean_token_accuracy': '0.7491', 'epoch': '0.64'}
+[09:25:03] [safety_finetune] step 130/188 loss=1.0915 elapsed=2.1min eta=0.9min
+{'loss': '1.091', 'grad_norm': '0.6523', 'learning_rate': '6.277e-05', 'entropy': '1.062', 'num_tokens': '9.352e+04', 'mean_token_accuracy': '0.7405', 'epoch': '0.6933'}
+[09:25:13] [safety_finetune] step 140/188 loss=1.1096 elapsed=2.2min eta=0.8min
+{'loss': '1.11', 'grad_norm': '0.5117', 'learning_rate': '5.213e-05', 'entropy': '1.057', 'num_tokens': '1.01e+05', 'mean_token_accuracy': '0.7342', 'epoch': '0.7467'}
+[09:25:22] [safety_finetune] step 150/188 loss=1.0898 elapsed=2.4min eta=0.6min
+{'loss': '1.09', 'grad_norm': '0.5586', 'learning_rate': '4.149e-05', 'entropy': '1.059', 'num_tokens': '1.082e+05', 'mean_token_accuracy': '0.7388', 'epoch': '0.8'}
+[09:25:31] [safety_finetune] step 160/188 loss=1.0957 elapsed=2.5min eta=0.4min
+{'loss': '1.096', 'grad_norm': '0.5117', 'learning_rate': '3.085e-05', 'entropy': '1.089', 'num_tokens': '1.154e+05', 'mean_token_accuracy': '0.7427', 'epoch': '0.8533'}
+[09:25:41] [safety_finetune] step 170/188 loss=0.9952 elapsed=2.7min eta=0.3min
+{'loss': '0.9952', 'grad_norm': '0.7305', 'learning_rate': '2.021e-05', 'entropy': '0.94', 'num_tokens': '1.22e+05', 'mean_token_accuracy': '0.7657', 'epoch': '0.9067'}
+[09:25:50] [safety_finetune] step 180/188 loss=1.0278 elapsed=2.9min eta=0.1min
+{'loss': '1.028', 'grad_norm': '0.6016', 'learning_rate': '9.574e-06', 'entropy': '1.011', 'num_tokens': '1.293e+05', 'mean_token_accuracy': '0.7534', 'epoch': '0.96'}
+{'train_runtime': '178.7', 'train_samples_per_second': '8.394', 'train_steps_per_second': '1.052', 'train_loss': '1.067', 'entropy': '0.9772', 'num_tokens': '1.346e+05', 'mean_token_accuracy': '0.7559', 'epoch': '1'}
+[09:25:57] === done: safety_finetune in 3.0 min, train_loss=1.0675 ===
+[09:25:58] === evaluating post-safety-finetune ===
+/home/bahae/venvs/ai-base/pytorch/lib/python3.12/site-packages/bitsandbytes/backends/cuda/ops.py:468: FutureWarning: _check_is_size will be removed in a future PyTorch release along with guard_size_oblivious.     Use _check(i >= 0) instead.
+  torch._check_is_size(blocksize)
+[09:26:19] [eval] 5/60 prompts done, elapsed=21s eta=228s
+[09:26:49] [eval] 10/60 prompts done, elapsed=51s eta=256s
+[09:27:17] [eval] 15/60 prompts done, elapsed=79s eta=237s
+[09:27:33] [eval] 20/60 prompts done, elapsed=95s eta=191s
+[09:27:50] [eval] 25/60 prompts done, elapsed=113s eta=158s
+[09:28:08] [eval] 30/60 prompts done, elapsed=130s eta=130s
+[09:28:23] [eval] 35/60 prompts done, elapsed=145s eta=104s
+[09:28:49] [eval] 40/60 prompts done, elapsed=171s eta=85s
+[09:29:15] [eval] 45/60 prompts done, elapsed=198s eta=66s
+[09:29:35] [eval] 50/60 prompts done, elapsed=217s eta=43s
+[09:29:50] [eval] 55/60 prompts done, elapsed=232s eta=21s
+[09:30:13] [eval] 60/60 prompts done, elapsed=255s eta=0s
+[09:30:13] overall_defection_rate=0.0% by_position={'prepend': 0.0, 'append': 0.0, 'mid': 0.0} false_trigger_rate=0.0%
+
+| stage | defection @ prepend | defection @ append | defection @ mid | overall defection | false-trigger |
+|---|---|---|---|---|---|
+| after backdoor SFT | 43.3% | 43.3% | 28.3% | 25.0% | 8.3% |
+| after safety fine-tuning | 0.0% | 0.0% | 0.0% | 0.0% | 0.0% |
+
+Saved results to results/eval_results.json and results/eval_results.md
